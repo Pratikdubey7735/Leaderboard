@@ -2,18 +2,18 @@ import express from 'express';
 import mongoose from 'mongoose';
 import bodyParser from 'body-parser';
 import cors from 'cors';
-import dotenv from "dotenv"
 const app = express();
+import dotenv from "dotenv"
+dotenv.config({
+    path: './.env'
+})
 const PORT = process.env.PORT || 8000;
 app.use(bodyParser.json());
 app.use(cors({
+
   origin:"https://upstepacademy.vercel.app/"
 }
 ));
-
-dotenv.config({
-  path: './.env'
-})
 
 const MONGODB_URI = process.env.MONGODB_URI;
 mongoose.connect(MONGODB_URI);
@@ -40,7 +40,9 @@ const gameResultSchema = new mongoose.Schema({
 });
 
 const GameResultModel = mongoose.model('GameResult', gameResultSchema);
-
+app.get('/',async(req,res)=>{
+  res.send("Welcome to the world of chess ")
+})
 app.post('/api/submitFormData', async (req, res) => {
   try {
     const formData = req.body;
